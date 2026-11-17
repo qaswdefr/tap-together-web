@@ -90,6 +90,26 @@ const saveSettings = (settings) => {
 const format = (template, vars) =>
   (template || "").replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined ? vars[k] : ""));
 
+// Menu prices are stored in KRW; display an approximate converted amount for the selected language.
+const CURRENCY_BY_LANGUAGE = {
+  ko: { locale: "ko-KR", currency: "KRW", rate: 1, digits: 0 },
+  en: { locale: "en-US", currency: "USD", rate: 1 / 1336.6, digits: 2 },
+  zh: { locale: "zh-CN", currency: "CNY", rate: 1 / 200.51, digits: 2 },
+  ja: { locale: "ja-JP", currency: "JPY", rate: 100 / 840.31, digits: 0 },
+  vi: { locale: "vi-VN", currency: "VND", rate: 25712.5 / 1336.6, digits: 0 },
+};
+const formatCurrency = (amountKRW, language) => {
+  const config = CURRENCY_BY_LANGUAGE[language] || CURRENCY_BY_LANGUAGE.ko;
+  const amount = Math.round(amountKRW * config.rate * (10 ** config.digits)) / (10 ** config.digits);
+  return new Intl.NumberFormat(config.locale, {
+    style: "currency",
+    currency: config.currency,
+    currencyDisplay: "code",
+    minimumFractionDigits: config.digits,
+    maximumFractionDigits: config.digits,
+  }).format(amount);
+};
+
 const FALLBACK_LOADING_TEXT = "Loading...";
 
 const getCustomFeatureName = (feature, langId) => feature.names[langId] || feature.names.en || feature.names.ko;
@@ -815,7 +835,7 @@ export default function App() {
                   <span className="order-menu-photo-fallback" style={{ display: "none" }}>{item.icon}</span>
                 </span>
                 <span className="order-menu-name">{t.menu[item.id]}</span>
-                <span className="order-menu-price">{item.price.toLocaleString()}원~</span>
+                <span className="order-menu-price">{formatCurrency(item.price, selectedLang)}</span>
               </button>
             ))}
           </div>
@@ -852,7 +872,7 @@ export default function App() {
                         <div>
                           <p className="cart-item-name">{t.menu[c.id]}</p>
                           {summary && <p className="cart-item-options">{summary}</p>}
-                          <p className="cart-item-price">{c.unitPrice.toLocaleString()}원</p>
+                          <p className="cart-item-price">{formatCurrency(c.unitPrice, selectedLang)}</p>
                         </div>
                       </div>
                       <div className="cart-item-actions">
@@ -871,7 +891,7 @@ export default function App() {
               <div className="cart-footer">
                 <div className="total-row">
                   <span>{format(t.totalCountLabel, { n: remoteTotalCount })}</span>
-                  <span className="total-price">{remoteTotalPrice.toLocaleString()}원</span>
+                  <span className="total-price">{formatCurrency(remoteTotalPrice, selectedLang)}</span>
                 </div>
                 <button className="checkout-btn" onClick={handleRemoteCheckout}>{t.checkoutBtn}</button>
               </div>
@@ -1072,7 +1092,7 @@ export default function App() {
             {/* 음료 외 카페식 토핑 옵션은 사용하지 않습니다. */}
 
             <div className="options-price-row">
-              <span>{computeUnitPrice(orderOptionsFor, orderDraftOptions).toLocaleString()}원</span>
+              <span>{formatCurrency(computeUnitPrice(orderOptionsFor, orderDraftOptions), selectedLang)}</span>
             </div>
 
             <button className="checkout-btn" onClick={confirmOrder}>{t.addToCartBtn}</button>
