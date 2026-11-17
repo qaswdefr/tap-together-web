@@ -52,6 +52,7 @@ export const applyMenuNames = (translations) => {
   const result = {};
   Object.keys(translations).forEach((lang) => {
     const menu = { ...(translations[lang].menu || {}) };
+    Object.keys(menu).forEach((id) => { if (!MENU_NAMES[id]) delete menu[id]; });
     Object.keys(MENU_NAMES).forEach((id) => {
       const name = MENU_NAMES[id][lang] || MENU_NAMES[id].ko;
       if (name) menu[id] = name;
