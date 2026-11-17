@@ -3,7 +3,7 @@ import "./App.css";
 import { CARD_LANGUAGES, SPEECH_LANG_MAP, isCardLanguage } from "./i18n/languages";
 import { matchVoiceCommand } from "./voice/voiceCommands";
 import { parseVoiceOrder, NOT_FOUND_MESSAGES } from "./voice/menuVoiceOrder";
-import { CATEGORIES, CATEGORY_LABELS, MENU, WHIP_AVAILABLE_IDS, FIXED_ICE_IDS, DEFAULT_OPTIONS, computeUnitPrice, getMenuImageUrl, applyMenuNames } from "./data/menu";
+import { CATEGORIES, CATEGORY_LABELS, MENU, FIXED_ICE_IDS, DEFAULT_OPTIONS, computeUnitPrice, getMenuImageUrl, applyMenuNames } from "./data/menu";
 import { io } from "socket.io-client";
 import { CUSTOM_FEATURES } from "./data/customFeatures";
 
@@ -755,7 +755,6 @@ export default function App() {
   const isVoiceGuideOn = !!featureState["voice-guide"];
   const isEasyMode = !!featureState["easy-mode"];
   const filteredOrderMenu = MENU.filter((item) => item.category === orderCategory);
-  const isOrderWhipAvailable = orderOptionsFor ? WHIP_AVAILABLE_IDS.includes(orderOptionsFor.id) : false;
   const isOrderHotIceAvailable = orderOptionsFor ? !FIXED_ICE_IDS.includes(orderOptionsFor.id) : false;
   const hasMenuData = !!t.menu;
   const remoteTotalCount = remoteCart.reduce((s, c) => s + c.qty, 0);
