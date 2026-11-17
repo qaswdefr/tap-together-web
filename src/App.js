@@ -1029,6 +1029,7 @@ export default function App() {
               <span className="options-icon">{orderOptionsFor.icon}</span>
               <h3>{t.menu[orderOptionsFor.id]}</h3>
             </div>
+            <img className="options-menu-photo" src={getMenuImageUrl(orderOptionsFor)} alt={t.menu[orderOptionsFor.id]} onError={(e) => { e.currentTarget.style.display = "none"; }} />
 
             {isOrderHotIceAvailable && (
               <div className="options-group">
@@ -1050,7 +1051,7 @@ export default function App() {
               </div>
             )}
 
-            {orderOptionsFor.category === "drink" && (<div className="options-group">
+            {(<div className="options-group">
               <p className="options-group-label">{t.sizeLabel}</p>
               <div className="options-choice-row">
                 <button
