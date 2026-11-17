@@ -803,21 +803,17 @@ export default function App() {
                 className={`order-menu-item ${isEasyMode ? "easy" : ""}`}
                 onClick={() => openOrderOptions(item)}
               >
-                {isEasyMode ? (
-                  <span className="order-menu-photo-wrap">
-                    <img
-                      className="order-menu-photo"
-                      src={getMenuImageUrl(item)}
-                      alt={t.menu[item.id]}
-                      onError={(e) => {
-                        e.target.parentElement.style.display = "none";
-                        e.target.parentElement.nextSibling.style.display = "block";
-                      }}
-                    />
-                  </span>
-                ) : null}
-                <span className="order-menu-icon" style={isEasyMode ? { display: "none" } : undefined}>
-                  {item.icon}
+                <span className="order-menu-photo-wrap">
+                  <img
+                    className="order-menu-photo"
+                    src={getMenuImageUrl(item)}
+                    alt={t.menu[item.id]}
+                    onError={(e) => {
+                      e.target.style.display = "none";
+                      e.target.nextSibling.style.display = "block";
+                    }}
+                  />
+                  <span className="order-menu-photo-fallback" style={{ display: "none" }}>{item.icon}</span>
                 </span>
                 <span className="order-menu-name">{t.menu[item.id]}</span>
                 <span className="order-menu-price">{item.price.toLocaleString()}원~</span>
