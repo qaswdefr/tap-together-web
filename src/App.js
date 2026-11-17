@@ -1070,21 +1070,6 @@ export default function App() {
             </div>)}
 
             {/* 음료 외 카페식 토핑 옵션은 사용하지 않습니다. */}
-            
-
-            
-                  >
-                    {t.whipNone}
-                  </button>
-                  <button
-                    className={`option-choice ${orderDraftOptions.whip === "add" ? "selected" : ""}`}
-                    onClick={() => setOrderDraftOptions((prev) => ({ ...prev, whip: "add" }))}
-                  >
-                    {t.whipAdd}
-                  </button>
-                </div>
-              </div>
-            )}
 
             <div className="options-price-row">
               <span>{computeUnitPrice(orderOptionsFor, orderDraftOptions).toLocaleString()}원</span>
