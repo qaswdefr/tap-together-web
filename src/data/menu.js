@@ -24,10 +24,10 @@ export const MENU = [
   { id: "monster-whopper", category: "burger", price: 11200, icon: "🍔", imageUrl: "https://i.daily.jp/leisure/kansai/2022/07/07/Images/f_15449643.jpg",
     names: { ko: "몬스터와퍼", en: "Monster Whopper", zh: "怪兽皇堡", ja: "モンスターワッパー", vi: "Monster Whopper" },
     whip: false, iceOnly: true },
-  { id: "whopper-set", category: "set", price: 12100, icon: "🍔", imageUrl: "https://medias.burgerking.fr/_prd/img/products/4/56/4565c2c0-baec-48d9-8493-db196b9b3250_", names: { ko: "와퍼 세트", en: "Whopper Meal", zh: "皇堡套餐", ja: "ワッパーセット", vi: "Combo Whopper" }, whip: false, iceOnly: true },
-  { id: "quattro-cheese-whopper-set", category: "set", price: 12900, icon: "🧀", imageUrl: "https://image2.lotteimall.com/goods/75/85/63/1257638575_1.jpg/dims/resizemc/550x550/optimize", names: { ko: "콰트로치즈와퍼 세트", en: "Quattro Cheese Whopper Meal", zh: "四重芝士皇堡套餐", ja: "クアトロチーズワッパーセット", vi: "Combo Whopper Phô Mai" }, whip: false, iceOnly: true },
-  { id: "shrimp-whopper-set", category: "set", price: 12900, icon: "🍤", imageUrl: "https://mob-prd.burgerking.co.kr/images/menu/web/main/2025/06/11/a2910c14-96f9-4b5a-9265-9b34a3e12c7b.png", names: { ko: "통새우와퍼 세트", en: "Shrimp Whopper Meal", zh: "鲜虾皇堡套餐", ja: "エビワッパーセット", vi: "Combo Whopper Tôm" }, whip: false, iceOnly: true },
-  { id: "monster-whopper-set", category: "set", price: 13800, icon: "🍔", imageUrl: "https://i.daily.jp/leisure/kansai/2022/07/07/Images/f_15449643.jpg", names: { ko: "몬스터와퍼 세트", en: "Monster Whopper Meal", zh: "怪兽皇堡套餐", ja: "モンスターワッパーセット", vi: "Combo Monster Whopper" }, whip: false, iceOnly: true },
+  { id: "whopper-set", category: "set", price: 12100, icon: "🍔", imageUrl: "https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/dl/v2/7/1/9/4/5/3/UowfN/8795719453_214725429.webp", names: { ko: "와퍼 세트", en: "Whopper Meal", zh: "皇堡套餐", ja: "ワッパーセット", vi: "Combo Whopper" }, whip: false, iceOnly: true },
+  { id: "quattro-cheese-whopper-set", category: "set", price: 12900, icon: "🧀", imageUrl: "https://sitem.ssgcdn.com/10/74/72/item/1000535727410_i1_750.jpg", names: { ko: "콰트로치즈와퍼 세트", en: "Quattro Cheese Whopper Meal", zh: "四重芝士皇堡套餐", ja: "クアトロチーズワッパーセット", vi: "Combo Whopper Phô Mai" }, whip: false, iceOnly: true },
+  { id: "shrimp-whopper-set", category: "set", price: 12900, icon: "🍤", imageUrl: "https://sitem.ssgcdn.com/07/43/54/item/1000518544307_i1_1200.jpg", names: { ko: "통새우와퍼 세트", en: "Shrimp Whopper Meal", zh: "鲜虾皇堡套餐", ja: "エビワッパーセット", vi: "Combo Whopper Tôm" }, whip: false, iceOnly: true },
+  { id: "monster-whopper-set", category: "set", price: 13800, icon: "🍔", imageUrl: "https://contents.lotteon.com/itemimage/LO/20/93/61/56/82/_2/09/36/15/68/3/LO2093615682_2093615683_1.jpg", names: { ko: "몬스터와퍼 세트", en: "Monster Whopper Meal", zh: "怪兽皇堡套餐", ja: "モンスターワッパーセット", vi: "Combo Monster Whopper" }, whip: false, iceOnly: true },
   { id: "french-fries", category: "side", price: 2300, icon: "🍟", imageUrl: "https://hips.hearstapps.com/hmg-prod/images/11-659c1ea6df051.png",
     names: { ko: "프렌치프라이", en: "French Fries", zh: "薯条", ja: "フレンチフライ", vi: "Khoai tây chiên" },
     whip: false, iceOnly: true },
@@ -80,7 +80,7 @@ export const computeUnitPrice = (item, options) =>
   item.price + (options.size === "large" ? ADDON_PRICE.sizeLarge : 0);
 
 export const buildOptionSummary = (t, options) =>
-  options.size === "large" ? t.sizeLarge.replace(/\\s*\\(.*\\)/, "") : "";
+  options.size === "large" ? t.sizeLarge.replace(/\s*\(.*\)/, "") : "";
 
 export const format = (template, vars) =>
   (template || "").replace(/\{(\\w+)\}/g, (_, k) => (vars[k] !== undefined ? vars[k] : ""));
