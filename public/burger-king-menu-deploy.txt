@@ -1,0 +1,3 @@
+Burger King menu deployment trigger
+Menu source: src/data/menu.js
+Updated: 2026-11-17
