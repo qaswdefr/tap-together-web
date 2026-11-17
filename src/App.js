@@ -1051,7 +1051,7 @@ export default function App() {
               </div>
             )}
 
-            <div className="options-group">
+            {orderOptionsFor.category === "drink" && (<div className="options-group">
               <p className="options-group-label">{t.sizeLabel}</p>
               <div className="options-choice-row">
                 <button
@@ -1067,33 +1067,12 @@ export default function App() {
                   {t.sizeLarge}
                 </button>
               </div>
-            </div>
+            </div>)}
 
-            <div className="options-group">
-              <p className="options-group-label">{t.toppingLabel}</p>
-              <div className="options-choice-row">
-                <button
-                  className={`option-choice ${orderDraftOptions.topping === "none" ? "selected" : ""}`}
-                  onClick={() => setOrderDraftOptions((prev) => ({ ...prev, topping: "none" }))}
-                >
-                  {t.toppingNone}
-                </button>
-                <button
-                  className={`option-choice ${orderDraftOptions.topping === "pearl" ? "selected" : ""}`}
-                  onClick={() => setOrderDraftOptions((prev) => ({ ...prev, topping: "pearl" }))}
-                >
-                  {t.toppingPearl}
-                </button>
-              </div>
-            </div>
+            {/* 음료 외 카페식 토핑 옵션은 사용하지 않습니다. */}
+            
 
-            {isOrderWhipAvailable && (
-              <div className="options-group">
-                <p className="options-group-label">{t.whipLabel}</p>
-                <div className="options-choice-row">
-                  <button
-                    className={`option-choice ${orderDraftOptions.whip === "none" ? "selected" : ""}`}
-                    onClick={() => setOrderDraftOptions((prev) => ({ ...prev, whip: "none" }))}
+            
                   >
                     {t.whipNone}
                   </button>
