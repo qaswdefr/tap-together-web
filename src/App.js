@@ -3,7 +3,7 @@ import "./App.css";
 import { CARD_LANGUAGES, SPEECH_LANG_MAP, isCardLanguage } from "./i18n/languages";
 import { matchVoiceCommand } from "./voice/voiceCommands";
 import { parseVoiceOrder, NOT_FOUND_MESSAGES } from "./voice/menuVoiceOrder";
-import { CATEGORIES, MENU, WHIP_AVAILABLE_IDS, FIXED_ICE_IDS, DEFAULT_OPTIONS, computeUnitPrice, getMenuImageUrl, applyMenuNames } from "./data/menu";
+import { CATEGORIES, CATEGORY_LABELS, MENU, WHIP_AVAILABLE_IDS, FIXED_ICE_IDS, DEFAULT_OPTIONS, computeUnitPrice, getMenuImageUrl, applyMenuNames } from "./data/menu";
 import { io } from "socket.io-client";
 import { CUSTOM_FEATURES } from "./data/customFeatures";
 
@@ -135,7 +135,7 @@ export default function App() {
 
   const [volume, setVolume] = useState(savedSettings?.volume ?? 0.8);
 
-  const [orderCategory, setOrderCategory] = useState("coffee");
+  const [orderCategory, setOrderCategory] = useState("burger");
   const [orderOptionsFor, setOrderOptionsFor] = useState(null);
   const [orderDraftOptions, setOrderDraftOptions] = useState(DEFAULT_OPTIONS);
 
@@ -792,7 +792,7 @@ export default function App() {
                 aria-pressed={orderCategory === cat}
                 onClick={() => setOrderCategory(cat)}
               >
-                {t.categories[cat]}
+                {CATEGORY_LABELS[cat]?.[selectedLang] || CATEGORY_LABELS[cat]?.ko || cat}
               </button>
             ))}
           </div>
