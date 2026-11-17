@@ -3,7 +3,7 @@ import "./App.css";
 import { CARD_LANGUAGES, SPEECH_LANG_MAP, isCardLanguage } from "./i18n/languages";
 import { matchVoiceCommand } from "./voice/voiceCommands";
 import { parseVoiceOrder, NOT_FOUND_MESSAGES } from "./voice/menuVoiceOrder";
-import { CATEGORIES, MENU, WHIP_AVAILABLE_IDS, FIXED_ICE_IDS, DEFAULT_OPTIONS, computeUnitPrice, getMenuImageUrl, applyMenuNames } from "./data/menu";
+import { CATEGORIES, CATEGORY_LABELS, MENU, FIXED_ICE_IDS, DEFAULT_OPTIONS, computeUnitPrice, getMenuImageUrl, applyMenuNames } from "./data/menu";
 import { io } from "socket.io-client";
 import { CUSTOM_FEATURES } from "./data/customFeatures";
 
@@ -135,7 +135,7 @@ export default function App() {
 
   const [volume, setVolume] = useState(savedSettings?.volume ?? 0.8);
 
-  const [orderCategory, setOrderCategory] = useState("coffee");
+  const [orderCategory, setOrderCategory] = useState("burger");
   const [orderOptionsFor, setOrderOptionsFor] = useState(null);
   const [orderDraftOptions, setOrderDraftOptions] = useState(DEFAULT_OPTIONS);
 
@@ -755,7 +755,6 @@ export default function App() {
   const isVoiceGuideOn = !!featureState["voice-guide"];
   const isEasyMode = !!featureState["easy-mode"];
   const filteredOrderMenu = MENU.filter((item) => item.category === orderCategory);
-  const isOrderWhipAvailable = orderOptionsFor ? WHIP_AVAILABLE_IDS.includes(orderOptionsFor.id) : false;
   const isOrderHotIceAvailable = orderOptionsFor ? !FIXED_ICE_IDS.includes(orderOptionsFor.id) : false;
   const hasMenuData = !!t.menu;
   const remoteTotalCount = remoteCart.reduce((s, c) => s + c.qty, 0);
@@ -792,7 +791,7 @@ export default function App() {
                 aria-pressed={orderCategory === cat}
                 onClick={() => setOrderCategory(cat)}
               >
-                {t.categories[cat]}
+                {CATEGORY_LABELS[cat]?.[selectedLang] || CATEGORY_LABELS[cat]?.ko || cat}
               </button>
             ))}
           </div>
@@ -1051,7 +1050,7 @@ export default function App() {
               </div>
             )}
 
-            <div className="options-group">
+            {orderOptionsFor.category === "drink" && (<div className="options-group">
               <p className="options-group-label">{t.sizeLabel}</p>
               <div className="options-choice-row">
                 <button
@@ -1067,45 +1066,9 @@ export default function App() {
                   {t.sizeLarge}
                 </button>
               </div>
-            </div>
+            </div>)}
 
-            <div className="options-group">
-              <p className="options-group-label">{t.toppingLabel}</p>
-              <div className="options-choice-row">
-                <button
-                  className={`option-choice ${orderDraftOptions.topping === "none" ? "selected" : ""}`}
-                  onClick={() => setOrderDraftOptions((prev) => ({ ...prev, topping: "none" }))}
-                >
-                  {t.toppingNone}
-                </button>
-                <button
-                  className={`option-choice ${orderDraftOptions.topping === "pearl" ? "selected" : ""}`}
-                  onClick={() => setOrderDraftOptions((prev) => ({ ...prev, topping: "pearl" }))}
-                >
-                  {t.toppingPearl}
-                </button>
-              </div>
-            </div>
-
-            {isOrderWhipAvailable && (
-              <div className="options-group">
-                <p className="options-group-label">{t.whipLabel}</p>
-                <div className="options-choice-row">
-                  <button
-                    className={`option-choice ${orderDraftOptions.whip === "none" ? "selected" : ""}`}
-                    onClick={() => setOrderDraftOptions((prev) => ({ ...prev, whip: "none" }))}
-                  >
-                    {t.whipNone}
-                  </button>
-                  <button
-                    className={`option-choice ${orderDraftOptions.whip === "add" ? "selected" : ""}`}
-                    onClick={() => setOrderDraftOptions((prev) => ({ ...prev, whip: "add" }))}
-                  >
-                    {t.whipAdd}
-                  </button>
-                </div>
-              </div>
-            )}
+            {/* 음료 외 카페식 토핑 옵션은 사용하지 않습니다. */}
 
             <div className="options-price-row">
               <span>{computeUnitPrice(orderOptionsFor, orderDraftOptions).toLocaleString()}원</span>
